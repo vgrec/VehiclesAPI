@@ -28,8 +28,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -129,6 +128,16 @@ public class CarControllerTest {
          */
         mvc.perform(MockMvcRequestBuilders.delete("/cars/1"))
                 .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void updateCar() throws Exception {
+        mvc.perform(
+                put(new URI("/cars/1"))
+                        .content(json.write(getCar()).getJson())
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
     }
 
     /**
